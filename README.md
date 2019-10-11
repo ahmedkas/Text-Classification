@@ -10,6 +10,7 @@ Dependencies:
 
 
 Instructions:
+
 1- Download the dataset from Kaggle Toxic Comment Classification Challenge, rename the training dataset as GT.csv and place it into data directory.
 
 Link: https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data
