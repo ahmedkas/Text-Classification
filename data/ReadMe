@@ -1,3 +1,6 @@
 Download the dataset from Kaggle Toxic Comment Classification Challenge, rename the training dataset as GT.csv into this folder.
 
 Link: https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data
+
+Download glove.840B.300d.txt and place it into this folder
+Link: https://nlp.stanford.edu/projects/glove/
