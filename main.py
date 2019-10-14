@@ -15,6 +15,10 @@ x = data["comment_text"]
 x = x.values.tolist()
 x = Preprocess(x)
 
+# Available Text_Manipulations : ['DOC2VEC','Embedding','USE']
+# Available Classes : ['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate']
+# Available Models: ['CNN','DNN','RNN','LSTM','GRU','Transformer']
+
 available_text_manipulation=sys.argv[1]
 available_class=sys.argv[2]
 available_model=sys.argv[3]
