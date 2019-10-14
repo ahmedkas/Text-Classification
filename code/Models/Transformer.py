@@ -203,14 +203,14 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, lo
     merged = Dense(num_dense, activation=act)(merged)
     merged = Dropout(rate_drop_dense)(merged)
     merged = BatchNormalization()(merged)
-    preds = Dense(1, activation='sigmoid')(merged)
+    preds = Dense(1, activation='linear')(merged)
 
     ########################################
     ## train the model
     ########################################
     model = Model(inputs=comment_input, \
             outputs=preds)
-    model.compile(loss='binary_crossentropy',
+    model.compile(loss='mean_squared_error',
             optimizer='rmsprop',
             metrics=['accuracy'])
     print(model.summary())

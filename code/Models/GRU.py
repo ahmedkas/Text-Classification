@@ -22,7 +22,7 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001, n_layers = 3, layer_
         model.add(keras.layers.Dropout(0.2))
 
     # model.add(keras.layers.Dense(len(y[0]), activation='softmax'))
-    model.add(keras.layers.Dense(1, activation='sigmoid'))
-    model.compile(optimizer=keras.optimizers.Adam(lr=LR), loss='binary_crossentropy', metrics=['accuracy'])
+    model.add(keras.layers.Dense(1, activation='linear'))
+    model.compile(optimizer=keras.optimizers.Adam(lr=LR), loss='mean_squared_error', metrics=['accuracy'])
     model.fit(x, y, epochs=epochs,batch_size=batch_size)
     return model
