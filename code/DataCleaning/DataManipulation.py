@@ -70,7 +70,7 @@ def Embedding(docs,size = 100):
             f = open("./data/ProcessedData/EmbeddingVocab","wb")
             pickle.dump(Vocab,f)
             f = open("./data/ProcessedData/EmbeddingVocabIndeces","wb")
-            pickle.dump(Vocab,f)
+            pickle.dump(indeces,f)
         else :
             f = open("./data/ProcessedData/EmbeddingVocab","rb")
             Vocab = pickle.load(f)
