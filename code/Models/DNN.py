@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 import keras
 
-def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001, n_layers = 3, layer_size = 128, dropout = False, MaxPooling = False, Embedding = False, vocab_size = None, embedding_dim = 64, loss = "binary_crossentropy"):
+def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001, n_layers = 3, layer_size = 128, dropout = False, MaxPooling = False, Embedding = False, vocab_size = None, embedding_dim = 64, loss = "binary_crossentropy",train=False):
 
 
 
@@ -23,5 +23,10 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001, n_layers = 3, layer_
     # model.add(keras.layers.Dense(len(y[0]), activation='softmax'))
     model.add(keras.layers.Dense(1, activation='linear'))
     model.compile(optimizer=keras.optimizers.Adam(lr=LR), loss='mean_squared_error', metrics=['accuracy'])
-    model.fit(x, y, epochs=epochs,batch_size=batch_size)
+
+    if train == True :
+        model.fit(x, y, epochs=epochs,batch_size=batch_size)
+    else :
+        # model.build(x.shape[:batch_size])
+        model.fit(x[:1], y[:1], epochs=1,batch_size=batch_size)
     return model

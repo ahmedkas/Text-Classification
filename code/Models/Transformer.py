@@ -143,7 +143,7 @@ class Attention(Layer):
         #return input_shape[0], input_shape[-1]
         return input_shape[0],  self.features_dim
 
-def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, loss = "binary_crossentropy",embedding_dim=300):
+def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, loss = "binary_crossentropy",embedding_dim=300,train=False):
 
     EMBEDDING_FILE='./data/glove.840B.300d.txt'
 
@@ -170,13 +170,14 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, lo
     ########################################
     print('Preparing embedding matrix')
     nb_words = vocab_size
-    f = open("./data/ProcessedData/EmbeddingVocabIndeces","rb")
-    indeces = pickle.load(f)
+    f = open("./data/ProcessedData/EmbeddingVocab","rb")
+    Vocab = pickle.load(f)
     embedding_matrix = np.zeros((nb_words, 300))
-    for i in range(len(indeces)):
+    for i in range(len(Vocab)):
         if i >= vocab_size:
             continue
-        embedding_vector = embeddings_index.get(indeces[i])
+
+        embedding_vector = embeddings_index.get(Vocab[i])
         if embedding_vector is not None:
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
@@ -203,14 +204,14 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, lo
     merged = Dense(num_dense, activation=act)(merged)
     merged = Dropout(rate_drop_dense)(merged)
     merged = BatchNormalization()(merged)
-    preds = Dense(1, activation='linear')(merged)
+    preds = Dense(1, activation='sigmoid')(merged)
 
     ########################################
     ## train the model
     ########################################
     model = Model(inputs=comment_input, \
             outputs=preds)
-    model.compile(loss='mean_squared_error',
+    model.compile(loss='binary_crossentropy',
             optimizer='rmsprop',
             metrics=['accuracy'])
     print(model.summary())
@@ -220,5 +221,9 @@ def Train(x, y, epochs = 100, batch_size = 128, LR = 0.001,vocab_size = None, lo
 
     early_stopping =EarlyStopping(monitor='val_loss', patience=5)
 
-    hist = model.fit(x, y, epochs=epochs, batch_size=batch_size, shuffle=True, callbacks=[early_stopping])
+    if train == True :
+        hist = model.fit(x, y, epochs=epochs, batch_size=batch_size, shuffle=True, callbacks=[early_stopping])
+    else :
+        # model.build(x.shape)
+        model.fit(x[:1], y[:1], epochs=1,batch_size=batch_size)
     return model
